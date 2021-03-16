@@ -56,6 +56,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       moveHistory: [null],
+      sortDesc: false,
     };
   }
 
@@ -87,6 +88,11 @@ class Game extends React.Component {
     });
   }
 
+  sort = () => {
+    let sortState = !this.state.sortDesc;
+    this.setState({ sortDesc: sortState });
+  };
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -108,9 +114,9 @@ class Game extends React.Component {
           playedRow +
           "))"
         : "Go to game start";
-      if (moveNum === this.state.stepNumber) {
+      if (moveNum > 0 && moveNum === this.state.stepNumber) {
         return (
-          <li key={moveNum}>
+          <li key={moveNum} value={moveNum + 1}>
             <button onClick={() => this.jumpTo(moveNum)}>
               <strong>{desc}</strong>
             </button>
@@ -118,12 +124,18 @@ class Game extends React.Component {
         );
       } else {
         return (
-          <li key={moveNum}>
+          <li key={moveNum} value={moveNum + 1}>
             <button onClick={() => this.jumpTo(moveNum)}>{desc}</button>
           </li>
         );
       }
     });
+
+    let sortState = "Sort Decending";
+    if (this.state.sortDesc) {
+      moves.reverse();
+      sortState = "Sort Ascending";
+    }
 
     let status;
     if (winner) {
@@ -142,6 +154,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <button onClick={() => this.sort()}>{sortState}</button>
           <ol>{moves}</ol>
         </div>
       </div>
