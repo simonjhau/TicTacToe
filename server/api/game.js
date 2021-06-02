@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const idFilter = (req) => (member) => member.id === parseInt(req.params.id);
+const idFilter = (req) => (game) => game.id === req.params.id;
 
 const games = [];
 
@@ -21,20 +21,41 @@ router.post("/", (req, res) => {
   };
 
   games.push(newGame);
-  res.send(games);
+  res.send(games[games.length - 1]);
 });
 
 // Update state of game
 router.put("/:id", (req, res) => {
-  res.send(games);
+  const found = games.some(idFilter(req));
+  if (found) {
+    games.forEach((game, i) => {
+      if (idFilter(req)(game)) {
+        const updGame = games.filter(idFilter(req));
+
+        // Update 2nd ip address if required
+        if (!updGame.ip2) {
+          console.log(req.ip);
+          updGame[0].ip2 = req.ip;
+          console.log(updGame);
+        }
+
+        games[i] = updGame;
+        res.json({ msg: "Game updated", updGame });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+  }
 });
 
-// router.get("/:id", (req, res) => {
-//   res.send("get");
-// });
-
-router.get("/binaya", (req, res) => {
-  res.send("<h1>Hi binaya</h1>  <p>I just wanted to say hi</p>");
+// Get game by ID
+router.get("/:id", (req, res) => {
+  const found = games.some(idFilter(req));
+  if (found) {
+    res.json(games.filter(idFilter(req)));
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+  }
 });
 
 // Make unique ID for game
@@ -75,7 +96,7 @@ function makeId(length) {
 //   }
 // });
 
-// // Update Member
+// Update Member
 // router.put("/:id", (req, res) => {
 //   const found = members.some(idFilter(req));
 

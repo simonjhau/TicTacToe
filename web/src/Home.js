@@ -6,7 +6,7 @@ const Home = () => {
       <Link to="game">
         <button>Local Game</button>
       </Link>
-      <Link to="online-setup">
+      <Link to="online-game">
         <button>Online Game</button>
       </Link>
     </div>

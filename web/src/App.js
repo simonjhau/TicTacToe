@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import Home from "./Home";
-import OnlineSetup from "./OnlineSetup";
+import OnlineGame from "./OnlineGame";
 import Game from "./Game";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./NotFound";
@@ -18,8 +18,8 @@ function App() {
             <Route path="/game">
               <Game />
             </Route>
-            <Route path="/online-setup">
-              <OnlineSetup />
+            <Route path="/online-game">
+              <OnlineGame />
             </Route>
             <Route path="*">
               <NotFound></NotFound>
