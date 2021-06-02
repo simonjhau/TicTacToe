@@ -1,31 +1,11 @@
 const express = require("express");
+const path = require("path");
+const logger = require("./middleware/logger");
+
 const app = express();
 
-app.use(logger);
+// Game API Routes
+app.use("/api/game", require("./api/game"));
 
-app.get("/", (req, res) => {
-  console.log("Home page");
-  res.send("Home Page");
-});
-
-app.get("/users", auth, (req, res) => {
-  console.log(`User is admin = ${req.admin}`);
-  res.send("Users Page");
-});
-
-function logger(req, res, next) {
-  console.log(req.originalUrl);
-  next();
-}
-
-function auth(req, res, next) {
-  console.log("Auth");
-  if (req.query.admin === "true") {
-    req.admin = "true";
-    next();
-  } else {
-    res.send("No Auth");
-  }
-}
-
-app.listen(3000, () => console.log("Server Started"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

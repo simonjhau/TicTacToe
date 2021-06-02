@@ -38,3 +38,17 @@
   max-width: 800px;
   margin: auto;
 }
+
+.home button,
+.online-setup button {
+  background-color: #f1356d;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 15px;
+  margin-left: 10px;
+  border-radius: 7px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}

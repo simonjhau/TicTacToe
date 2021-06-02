@@ -22,15 +22,15 @@ ul {
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   line-height: 34px;
-  height: 56px;
+  height: 40px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 56px;
+  width: 40px;
 }
 
 .square:focus {
@@ -44,8 +44,10 @@ ul {
 .game {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .game-info {
+  /* background-color: red; */
   margin-left: 20px;
 }

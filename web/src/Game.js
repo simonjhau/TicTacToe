@@ -79,6 +79,8 @@ class Game extends React.Component {
       xIsNext: !this.state.xIsNext,
       moveHistory: moveHistory.concat(i),
     });
+
+    console.log(this.state.history);
   }
 
   jumpTo(step) {
