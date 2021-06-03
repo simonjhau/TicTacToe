@@ -1,53 +1,8 @@
 import React from "react";
+import Board from "./Board";
 import "./Game.css";
 
-const numRowCol = 3;
-
-const Square = (props) => {
-  return (
-    <button className="square" onClick={props.onClick}>
-      {props.value}
-    </button>
-  );
-};
-
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        key={i}
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  renderRow = (rowNum) => {
-    let row = [];
-    for (let y = 0; y < numRowCol; y++) {
-      row.push(this.renderSquare(rowNum * 3 + y));
-    }
-    return (
-      <div className="board-row" key={"row" + rowNum}>
-        {row}
-      </div>
-    );
-  };
-
-  renderGrid = () => {
-    let grid = [];
-    for (let x = 0; x < numRowCol; x++) {
-      grid.push(this.renderRow(x));
-    }
-    return <div>{grid}</div>;
-  };
-
-  render() {
-    return <div>{this.renderGrid()}</div>;
-  }
-}
-
-class Game extends React.Component {
+class LocalGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -192,4 +147,4 @@ function calculateWinner(squares) {
   return null;
 }
 
-export default Game;
+export default LocalGame;
