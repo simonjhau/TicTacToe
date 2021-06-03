@@ -9,6 +9,9 @@ const Home = () => {
       <Link to="online-game">
         <button>Online Game</button>
       </Link>
+      <Link to="experiment">
+        <button>Experiment</button>
+      </Link>
     </div>
   );
 };

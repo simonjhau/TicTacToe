@@ -18,19 +18,19 @@ ul {
   margin-bottom: 10px;
 }
 
-.square {
+.square1 {
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 30px;
+  font-size: 50px;
   font-weight: bold;
   line-height: 34px;
-  height: 40px;
+  height: 200px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 40px;
+  width: 200px;
 }
 
 .square:focus {
