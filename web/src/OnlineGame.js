@@ -3,7 +3,6 @@ import JoinGame from "./JoinGame";
 import Board from "./Board";
 
 const apiUrl = "http://192.168.0.11:5000/api/game";
-//const apiUrl = "http://localhost:5000/api/game";
 
 const gameStatusType = {
   NOT_STARTED: "not-started",
