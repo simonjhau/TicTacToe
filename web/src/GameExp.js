@@ -172,6 +172,7 @@ class GameExp extends React.Component {
             <img
               style={{ width: "30px" }}
               src={undoIcon}
+              alt="Undo"
               onClick={() => this.jumpTo(this.state.stepNumber - 1)}
             />
           </div>

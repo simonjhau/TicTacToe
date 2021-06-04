@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import OnlineGame from "./OnlineGame";
 
-import Game from "./Game";
 import GameExp from "./GameExp";
 
 import LocalGame from "./LocalGame";
