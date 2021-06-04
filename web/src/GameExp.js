@@ -1,21 +1,64 @@
 import React from "react";
 import "./Game.css";
+import undoIcon from "./static/undoIcon.png";
 
 const numRowCol = 3;
 
-const Square = (props) => {
-  return (
-    <button className={"square" + props.key} onClick={props.onClick}>
-      {props.value}
-    </button>
-  );
-};
+class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hover: false, backgroundColor: "white" };
+  }
+
+  mouseLeave = () => {
+    this.setState({ hover: false });
+    this.setState({ backgroundColor: "#fff" });
+  };
+
+  mouseEnter = () => {
+    let colour;
+    if (this.props.player === "blue") {
+      colour = "#a9f2f5";
+    } else {
+      colour = "#f5ada9";
+    }
+
+    this.setState({ hover: true, backgroundColor: colour });
+  };
+
+  toggleBackgroundColor = () => {
+    if (this.props.player === "blue") {
+      this.setState({ backgroundColor: "#f5ada9" });
+    } else {
+      this.setState({ backgroundColor: "#a9f2f5" });
+    }
+  };
+
+  render() {
+    return (
+      <button
+        style={{ backgroundColor: this.state.backgroundColor }}
+        className={"square a" + this.props.id}
+        onClick={() => {
+          this.props.onClick();
+          this.toggleBackgroundColor();
+        }} //{this.props.onClick}
+        onMouseEnter={this.mouseEnter}
+        onMouseLeave={this.mouseLeave}
+      >
+        {this.props.value}
+      </button>
+    );
+  }
+}
 
 class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
         key={i}
+        id={i}
+        player={this.props.player}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
@@ -72,8 +115,6 @@ class GameExp extends React.Component {
       return;
     }
     var randomNum = Math.floor(Math.random() * 10);
-
-    console.log(randomNum);
     squares[i] = randomNum < 5 ? "X" : "O";
 
     this.setState({
@@ -85,10 +126,12 @@ class GameExp extends React.Component {
   }
 
   jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      bIsNext: step % 2 === 0,
-    });
+    if (step >= 0) {
+      this.setState({
+        stepNumber: step,
+        bIsNext: step % 2 === 0,
+      });
+    }
   }
 
   sort = () => {
@@ -101,51 +144,14 @@ class GameExp extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((hist, moveNum) => {
-      const playerAtMoveNum = moveNum % 2 === 1 ? "X" : "O";
-      const playedMove = this.state.moveHistory[moveNum];
-      const playedCol = Math.floor(playedMove / 3 + 1);
-      const playedRow = (playedMove % 3) + 1;
-      const desc = moveNum
-        ? "Go to move #" +
-          moveNum +
-          " (" +
-          playerAtMoveNum +
-          ": (" +
-          playedCol +
-          "," +
-          playedRow +
-          "))"
-        : "Go to game start";
-      if (moveNum > 0 && moveNum === this.state.stepNumber) {
-        return (
-          <li key={moveNum} value={moveNum + 1}>
-            <button onClick={() => this.jumpTo(moveNum)}>
-              <strong>{desc}</strong>
-            </button>
-          </li>
-        );
-      } else {
-        return (
-          <li key={moveNum} value={moveNum + 1}>
-            <button onClick={() => this.jumpTo(moveNum)}>{desc}</button>
-          </li>
-        );
-      }
-    });
-
-    let sortState = "Sort Decending";
-    if (this.state.sortDesc) {
-      moves.reverse();
-      sortState = "Sort Ascending";
-    }
-
     let status;
+    let player;
     if (winner) {
       status = this.state.bIsNext ? "Red wins!" : "Blue wins!";
     } else {
       if (this.state.stepNumber < 9) {
         status = "Next player: " + (this.state.bIsNext ? "Blue" : "Red");
+        player = this.state.bIsNext ? "blue" : "red";
       } else {
         status = "It's a draw";
       }
@@ -157,13 +163,17 @@ class GameExp extends React.Component {
           <div className="game-board">
             <Board
               squares={current.squares}
+              player={player}
               onClick={(i) => this.handleClick(i)}
             />
           </div>
           <div className="game-info">
-            <div>{status}</div>
-            <button onClick={() => this.sort()}>{sortState}</button>
-            <ol>{moves}</ol>
+            <div style={{ color: player }}>{status}</div>
+            <img
+              style={{ width: "30px" }}
+              src={undoIcon}
+              onClick={() => this.jumpTo(this.state.stepNumber - 1)}
+            />
           </div>
         </div>
       </div>

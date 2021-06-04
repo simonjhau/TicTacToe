@@ -18,9 +18,9 @@ ul {
   margin-bottom: 10px;
 }
 
-.square1 {
+.square {
   background: #fff;
-  border: 1px solid #999;
+  border: 2px solid #f1356d63;
   float: left;
   font-size: 50px;
   font-weight: bold;
@@ -33,8 +33,44 @@ ul {
   width: 200px;
 }
 
-.square:focus {
-  outline: none;
+.square.a0 {
+  border-left: none;
+  border-top: none;
+}
+
+.square.a1 {
+  border-top: none;
+}
+
+.square.a2 {
+  border-right: none;
+  border-top: none;
+}
+
+.square.a3 {
+  border-left: none;
+}
+
+.square.a5 {
+  border-right: none;
+}
+
+.square.a6 {
+  border-left: none;
+  border-bottom: none;
+}
+
+.square.a7 {
+  border-bottom: none;
+}
+
+.square.a7 {
+  border-bottom: none;
+}
+
+.square.a8 {
+  border-right: none;
+  border-bottom: none;
 }
 
 .kbd-navigation .square:focus {
@@ -48,6 +84,5 @@ ul {
 }
 
 .game-info {
-  /* background-color: red; */
-  margin-left: 20px;
+  margin-left: 50px;
 }
