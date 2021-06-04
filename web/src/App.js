@@ -1,8 +1,12 @@
 import Navbar from "./Navbar";
 import Home from "./Home";
 import OnlineGame from "./OnlineGame";
+
 import Game from "./Game";
 import GameExp from "./GameExp";
+
+import LocalGame from "./LocalGame";
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./NotFound";
 
@@ -16,8 +20,8 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/game">
-              <Game />
+            <Route path="/local-game">
+              <LocalGame />
             </Route>
             <Route path="/online-game">
               <OnlineGame />

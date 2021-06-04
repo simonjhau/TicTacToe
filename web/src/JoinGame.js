@@ -1,16 +1,15 @@
 import { useState } from "react";
 
-const JoinGame = ({ apiUrl, setGameId, setGameState }) => {
+const JoinGame = ({ apiUrl, gameData, setGameData }) => {
   const [id, setId] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`${apiUrl}/${id}`, { method: "PUT" })
+    fetch(`${apiUrl}/${id}`, { method: "PATCH" })
       .then((res) => res.json())
       .then((data) => {
-        setGameId(id);
-        setGameState("started");
+        setGameData(data.game);
       })
       .catch((error) => console.log(error));
   };

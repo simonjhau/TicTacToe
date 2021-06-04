@@ -18,10 +18,27 @@ router.post("/", (req, res) => {
     ip2: null,
     history: [{ squares: Array(9).fill(null) }],
     moveNum: 0,
+    xIsNext: true,
   };
 
   games.push(newGame);
   res.send(games[games.length - 1]);
+});
+
+// 2nd player join game
+router.patch("/:id", (req, res) => {
+  const found = games.some(idFilter(req));
+  if (found) {
+    games.forEach((game, i) => {
+      if (idFilter(req)(game)) {
+        game.ip2 = req.ip;
+
+        res.json({ msg: "Game updated", game });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+  }
 });
 
 // Update state of game
@@ -52,7 +69,7 @@ router.put("/:id", (req, res) => {
 router.get("/:id", (req, res) => {
   const found = games.some(idFilter(req));
   if (found) {
-    res.json(games.filter(idFilter(req)));
+    res.json(games.find(idFilter(req)));
   } else {
     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
   }
