@@ -8,6 +8,9 @@ const app = express();
 // Cors
 app.use(cors());
 
+// Body parser middleware
+app.use(express.json());
+
 // Game API Routes
 app.use("/api/game", require("./api/game"));
 

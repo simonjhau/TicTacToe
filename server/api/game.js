@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
   };
 
   games.push(newGame);
-  res.send(games[games.length - 1]);
+  res.json({ msg: "New game created", game: games[games.length - 1] });
 });
 
 // 2nd player join game
@@ -47,17 +47,14 @@ router.put("/:id", (req, res) => {
   if (found) {
     games.forEach((game, i) => {
       if (idFilter(req)(game)) {
-        const updGame = games.filter(idFilter(req));
-
-        // Update 2nd ip address if required
-        if (!updGame.ip2) {
-          console.log(req.ip);
-          updGame[0].ip2 = req.ip;
-          console.log(updGame);
+        // Check that device has permission to play this game
+        if (req.ip === game.ip1 || req.ip === game.ip2) {
+          const updGame = game;
+          updGame.history.push({ squares: req.body.squares });
+          updGame.moveNum += 1;
+          game = updGame;
+          res.json({ msg: "Game updated", game: game });
         }
-
-        games[i] = updGame;
-        res.json({ msg: "Game updated", updGame });
       }
     });
   } else {
