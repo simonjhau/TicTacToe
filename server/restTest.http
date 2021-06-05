@@ -1,6 +1,6 @@
-//GET http://localhost:5000/api/game
+#GET http://ricktactoe.com:5000/api/game
 
-POST http://localhost:5000/api/game
+POST http://ricktactoe.com:5000/api/game
 
 //GET http://localhost:5000/api/game/VURMY
 
