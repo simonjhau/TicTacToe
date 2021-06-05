@@ -1,21 +1,28 @@
 import { useState } from "react";
 
-const JoinGame = ({ apiUrl, gameData, setGameData }) => {
+const JoinGame = ({ apiUrl, setGameData, setGameInfo }) => {
   const [id, setId] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`${apiUrl}/${id}`, { method: "PATCH" })
-      .then((res) => res.json())
-      .then((data) => {
-        setGameData(data.game);
-      })
-      .catch((error) => console.log(error));
+    if (id) {
+      fetch(`${apiUrl}/${id}`, { method: "PATCH" })
+        .then((res) => res.json())
+        .then((data) => {
+          setGameData(data.game);
+          setGameInfo("");
+        })
+        .catch((error) => {
+          setGameInfo(`Unable to join game ${id}`);
+        });
+    } else {
+      setGameInfo(`Please enter the ID of game you wish to join`);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="join-game" onSubmit={handleSubmit}>
       <label>
         Game ID:
         <input

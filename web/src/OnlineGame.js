@@ -26,9 +26,13 @@ const OnlineGame = () => {
   const [playerTurn, setPlayerTurn] = useState(false);
   const [winner, setWinner] = useState(null);
   const playerSymbol = useRef("");
+  const [gameInfo, setGameInfo] = useState("");
+  const [numFailedReq, setNumFailedReq] = useState(0);
 
   // "Create New Game" button pressed
   const handleCreateNewGame = () => {
+    setGameInfo("");
+
     // Send API request to create new game
     fetch(apiUrl, { method: "POST" })
       .then((res) => res.json())
@@ -37,12 +41,16 @@ const OnlineGame = () => {
         setGameData(data.game);
         playerSymbol.current = "X";
         setPlayerTurn(true);
+        setGameInfo("Waiting for opponent to join");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setGameInfo("Unable to create new game... Please try again later");
+      });
   };
 
   // "Join Game" button pressed
   const handleJoinGame = () => {
+    setGameInfo("");
     setGameState(gameStatusType.JOINING);
     playerSymbol.current = "O";
     setPlayerTurn(false);
@@ -57,37 +65,61 @@ const OnlineGame = () => {
           .then((res) => res.json())
           .then((data) => {
             setGameData(data);
+            setNumFailedReq(0);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            console.log(error);
+            setNumFailedReq(numFailedReq + 1);
+          });
       }
     }, 500);
 
-    // Check if game has started
-    if (!gameData.id) {
-      setGameState(gameStatusType.NOT_STARTED);
-    } else if (!gameData.ip2) {
-      setGameState(gameStatusType.WAITING);
-    } else {
-      setGameState(gameStatusType.STARTED);
-    }
+    if (numFailedReq === 0) {
+      // Check if game has started
+      if (!gameData.id) {
+        setGameState(gameStatusType.NOT_STARTED);
+        return () => clearInterval(interval);
+      } else if (!gameData.ip2) {
+        setGameState(gameStatusType.WAITING);
+        return () => clearInterval(interval);
+      } else {
+        setGameState(gameStatusType.STARTED);
+      }
 
-    // Check if it is currently this player's turn
-    if (
-      (playerSymbol.current === "X" && gameData.moveNum % 2 === 0) ||
-      (playerSymbol.current === "O" && gameData.moveNum % 2 === 1)
-    ) {
-      setPlayerTurn(true);
-    } else {
-      setPlayerTurn(false);
-    }
+      // Check if game has finished
+      const current = gameData.history[gameData.moveNum];
+      const squares = current.squares.slice();
+      const gameWinner = calculateWinner(squares);
+      if (gameWinner) {
+        setWinner();
+        console.log("wonnn", gameWinner);
+        setGameInfo(`${gameWinner} has won!`);
+        return () => clearInterval(interval);
+      }
 
-    // Check if game has finished
-    const current = gameData.history[gameData.moveNum];
-    const squares = current.squares.slice();
-    setWinner(calculateWinner(squares));
+      // Check if it is currently this player's turn
+      if (
+        (playerSymbol.current === "X" && gameData.moveNum % 2 === 0) ||
+        (playerSymbol.current === "O" && gameData.moveNum % 2 === 1)
+      ) {
+        setPlayerTurn(true);
+        setGameInfo("Your turn!");
+      } else {
+        setPlayerTurn(false);
+        setGameInfo("Waiting for opponent to move...");
+      }
+    } else {
+      // There have been failed requests
+      setGameInfo("Attempting to reconnect to server...");
+
+      if (numFailedReq > 20) {
+        // Lost server connection...
+        setGameInfo("Lost server connection... Please create a new game");
+      }
+    }
 
     return () => clearInterval(interval);
-  }, [gameData, playerSymbol, winner]);
+  }, [gameData, playerSymbol, winner, numFailedReq]);
 
   // Called when square in board clicked
   const handleClick = (i) => {
@@ -137,31 +169,30 @@ const OnlineGame = () => {
             apiUrl={apiUrl}
             setGameData={setGameData}
             setGameState={setGameState}
+            setGameInfo={setGameInfo}
           />
-        )}
-        {gameState === gameStatusType.WAITING && (
-          <div>
-            <h1>Game Code: {gameData.id}</h1>
-            <p>Waiting for opponent...</p>
-          </div>
         )}
       </div>
       <div>
-        {gameState === gameStatusType.STARTED && (
+        {(gameState === gameStatusType.WAITING ||
+          gameState === gameStatusType.STARTED) && (
           <div>
             <h1>Game Code: {gameData.id}</h1>
-            <br></br>
-            <Board
-              squares={gameData.history[gameData.history.length - 1].squares}
-              onClick={(i) => handleClick(i)}
-            />
-            {winner && (
+            {gameState === gameStatusType.STARTED && (
               <div>
                 <br></br>
-                <h2>{winner} has won!</h2>
+                <Board
+                  squares={
+                    gameData.history[gameData.history.length - 1].squares
+                  }
+                  onClick={(i) => handleClick(i)}
+                />
               </div>
             )}
-            {!winner && !playerTurn && <p>Waiting for other player...</p>}
+            <div>
+              <br></br>
+              <h2>{gameInfo}</h2>
+            </div>
           </div>
         )}
       </div>

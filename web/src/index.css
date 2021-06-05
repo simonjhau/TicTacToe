@@ -40,7 +40,8 @@
 }
 
 .home button,
-.online-game-setup button {
+.online-game-setup button,
+.join-game [type="submit"] {
   background-color: #f1356d;
   color: white;
   border: none;
@@ -51,4 +52,20 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  vertical-align: center;
+  width: 200px;
+}
+
+.join-game label,
+.join-game input {
+  vertical-align: center;
+  font-size: 20px;
+  padding: 12px;
+  margin: 5px;
+  border-radius: 7px;
+  margin-left: 20px;
+}
+
+.join-game input {
+  width: 200px;
 }
