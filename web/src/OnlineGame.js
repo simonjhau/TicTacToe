@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import JoinGame from "./JoinGame";
 import Board from "./Board";
 
@@ -14,69 +14,55 @@ const gameStatusType = {
 
 const OnlineGame = () => {
   // Hooks
-  const [gameStatus, setGameState] = useState(gameStatusType.NOT_STARTED);
+  const [gameState, setGameState] = useState(gameStatusType.NOT_STARTED);
   const [gameData, setGameData] = useState({
     id: "",
     ip1: "",
     ip2: "",
     history: [{ squares: Array(9).fill(null) }],
     moveNum: 0,
-    xIsNext: true,
+    timeLastUpdate: null,
   });
-  const [playerSymbol, setPlayerSymbol] = useState("");
-
-  // Check if gameData has changed
-  // const gameDataDifferent = (data) => {
-  //   if (
-  //     data.id !== gameData.id ||
-  //     data.ip1 !== gameData.ip1 ||
-  //     data.ip2 !== gameData.ip2 ||
-  //     !arrayEquals(data.history, gameData.history) ||
-  //     data.moveNum !== gameData.moveNum ||
-  //     data.xIsNext !== gameData.xIsNext
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
+  const [playerTurn, setPlayerTurn] = useState(false);
+  const [winner, setWinner] = useState(null);
+  const playerSymbol = useRef("");
 
   // "Create New Game" button pressed
   const handleCreateNewGame = () => {
-    console.log("new game clicked");
+    // Send API request to create new game
     fetch(apiUrl, { method: "POST" })
       .then((res) => res.json())
       .then((data) => {
-        setGameData(data.game);
-        setPlayerSymbol("X");
         setGameState(gameStatusType.WAITING);
+        setGameData(data.game);
+        playerSymbol.current = "X";
+        setPlayerTurn(true);
       })
       .catch((error) => console.log(error));
   };
 
   // "Join Game" button pressed
   const handleJoinGame = () => {
-    setPlayerSymbol("O");
     setGameState(gameStatusType.JOINING);
+    playerSymbol.current = "O";
+    setPlayerTurn(false);
   };
 
   // Called on every render
   useEffect(() => {
+    // Call API once per second
     const interval = setInterval(() => {
-      console.log("use effect");
-      console.log(gameData);
-
-      if (gameData.id) {
+      if (!winner && gameData.id) {
         fetch(`${apiUrl}/${gameData.id}`, { method: "GET" })
           .then((res) => res.json())
           .then((data) => {
-            // if (gameDataDifferent(data)) {
             setGameData(data);
-            // }
           })
           .catch((error) => console.log(error));
       }
-    }, 1000);
+    }, 500);
 
+    // Check if game has started
     if (!gameData.id) {
       setGameState(gameStatusType.NOT_STARTED);
     } else if (!gameData.ip2) {
@@ -85,28 +71,43 @@ const OnlineGame = () => {
       setGameState(gameStatusType.STARTED);
     }
 
+    // Check if it is currently this player's turn
+    if (
+      (playerSymbol.current === "X" && gameData.moveNum % 2 === 0) ||
+      (playerSymbol.current === "O" && gameData.moveNum % 2 === 1)
+    ) {
+      setPlayerTurn(true);
+    } else {
+      setPlayerTurn(false);
+    }
+
+    // Check if game has finished
+    const current = gameData.history[gameData.moveNum];
+    const squares = current.squares.slice();
+    setWinner(calculateWinner(squares));
+
     return () => clearInterval(interval);
-  }, [gameData]);
+  }, [gameData, playerSymbol, winner]);
 
   // Called when square in board clicked
   const handleClick = (i) => {
-    console.log(`button ${i} clicked`);
-
     const gameDataCopy = gameData;
     const current = gameDataCopy.history[gameDataCopy.moveNum];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+
+    // Should board be clickable?
+    if (calculateWinner(squares) || squares[i] || !playerTurn) {
       return;
     }
 
-    squares[i] = playerSymbol;
+    // Set the square
+    squares[i] = playerSymbol.current;
 
+    // Send updated board to API
     const dataToSend = {
       squares: squares,
       moveNum: gameData.moveNum + 1,
     };
-
-    console.log(dataToSend);
 
     fetch(`${apiUrl}/${gameData.id}`, {
       method: "PUT",
@@ -117,7 +118,6 @@ const OnlineGame = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setGameData(data.game);
       })
       .catch((error) => console.log(error));
@@ -126,20 +126,20 @@ const OnlineGame = () => {
   return (
     <div className="online-game">
       <div className="online-game-setup">
-        {gameStatus === gameStatusType.NOT_STARTED && (
+        {gameState === gameStatusType.NOT_STARTED && (
           <div>
             <button onClick={handleCreateNewGame}>Create New Game</button>
             <button onClick={handleJoinGame}>Join Game</button>
           </div>
         )}
-        {gameStatus === gameStatusType.JOINING && (
+        {gameState === gameStatusType.JOINING && (
           <JoinGame
             apiUrl={apiUrl}
             setGameData={setGameData}
             setGameState={setGameState}
           />
         )}
-        {gameStatus === gameStatusType.WAITING && (
+        {gameState === gameStatusType.WAITING && (
           <div>
             <h1>Game Code: {gameData.id}</h1>
             <p>Waiting for opponent...</p>
@@ -147,13 +147,21 @@ const OnlineGame = () => {
         )}
       </div>
       <div>
-        {gameStatus === gameStatusType.STARTED && (
+        {gameState === gameStatusType.STARTED && (
           <div>
-            <h1>{gameData.id}</h1>
+            <h1>Game Code: {gameData.id}</h1>
+            <br></br>
             <Board
               squares={gameData.history[gameData.history.length - 1].squares}
               onClick={(i) => handleClick(i)}
             />
+            {winner && (
+              <div>
+                <br></br>
+                <h2>{winner} has won!</h2>
+              </div>
+            )}
+            {!winner && !playerTurn && <p>Waiting for other player...</p>}
           </div>
         )}
       </div>
@@ -183,13 +191,4 @@ function calculateWinner(squares) {
     }
   }
   return null;
-}
-
-function arrayEquals(a, b) {
-  return (
-    Array.isArray(a) &&
-    Array.isArray(b) &&
-    a.length === b.length &&
-    a.every((val, index) => val === b[index])
-  );
 }

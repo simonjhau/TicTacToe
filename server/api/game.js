@@ -18,7 +18,7 @@ router.post("/", (req, res) => {
     ip2: null,
     history: [{ squares: Array(9).fill(null) }],
     moveNum: 0,
-    xIsNext: true,
+    timeLastUpdate: new Date().getTime(),
   };
 
   games.push(newGame);
@@ -37,7 +37,17 @@ router.patch("/:id", (req, res) => {
       }
     });
   } else {
-    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+    res.status(400).json({ msg: `No game exists with id of ${req.params.id}` });
+  }
+});
+
+// Get game data by ID
+router.get("/:id", (req, res) => {
+  const found = games.some(idFilter(req));
+  if (found) {
+    res.json(games.find(idFilter(req)));
+  } else {
+    res.status(400).json({ msg: `No game exists with id of ${req.params.id}` });
   }
 });
 
@@ -49,28 +59,51 @@ router.put("/:id", (req, res) => {
       if (idFilter(req)(game)) {
         // Check that device has permission to play this game
         if (req.ip === game.ip1 || req.ip === game.ip2) {
-          const updGame = game;
-          updGame.history.push({ squares: req.body.squares });
-          updGame.moveNum += 1;
-          game = updGame;
+          // Update game
+          game.history.push({ squares: req.body.squares });
+          game.moveNum += 1;
+
           res.json({ msg: "Game updated", game: game });
         }
       }
     });
   } else {
-    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+    res.status(400).json({ msg: `No game exists with id of ${req.params.id}` });
   }
 });
 
-// Get game by ID
-router.get("/:id", (req, res) => {
+// Delete Member
+router.delete("/:id", (req, res) => {
   const found = games.some(idFilter(req));
+
   if (found) {
-    res.json(games.find(idFilter(req)));
+    // Delete game
+    games.forEach((game, i) => {
+      if (idFilter(req)(game)) {
+        games.splice(i, 1);
+      }
+    });
+    res.json({
+      msg: `Game ${req.params.id}  deleted`,
+    });
   } else {
-    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+    res.status(400).json({ msg: `No game exists with id of ${req.params.id}` });
   }
 });
+
+// Delete games that have not been updated for over 10 minutes
+const ONE_MINUTE = 60 * 1000;
+const TEN_MINUTES = 10 * ONE_MINUTE;
+setInterval(() => {
+  games.forEach((game, i) => {
+    const curTime = new Date().getTime();
+    if (curTime - game.timeLastUpdate > TEN_MINUTES) {
+      // Delete that record from array
+      console.log(`Game ${game.id} deleted`);
+      games.splice(i, 1);
+    }
+  });
+}, ONE_MINUTE);
 
 // Make unique ID for game
 function makeId(length) {
@@ -90,55 +123,5 @@ function makeId(length) {
 
   return id;
 }
-
-//   if (!newMember.name || !newMember.email) {
-//     return res.status(400).json({ msg: "Please include a name and email" });
-//   }
-
-//   members.push(newMember);
-//   res.json(members);
-//   // res.redirect('/');
-// });
-
-// router.get("/:id", (req, res) => {
-//   const found = members.some(idFilter(req));
-
-//   if (found) {
-//     res.json(members.filter(idFilter(req)));
-//   } else {
-//     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
-//   }
-// });
-
-// Update Member
-// router.put("/:id", (req, res) => {
-//   const found = members.some(idFilter(req));
-
-//   if (found) {
-//     members.forEach((member, i) => {
-//       if (idFilter(req)(member)) {
-//         const updMember = { ...member, ...req.body };
-//         members[i] = updMember;
-//         res.json({ msg: "Member updated", updMember });
-//       }
-//     });
-//   } else {
-//     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
-//   }
-// });
-
-// // Delete Member
-// router.delete("/:id", (req, res) => {
-//   const found = members.some(idFilter(req));
-
-//   if (found) {
-//     res.json({
-//       msg: "Member deleted",
-//       members: members.filter((member) => !idFilter(req)(member)),
-//     });
-//   } else {
-//     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
-//   }
-// });
 
 module.exports = router;
