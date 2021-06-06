@@ -32,7 +32,7 @@ router.patch("/:id", (req, res) => {
     games.forEach((game, i) => {
       if (idFilter(req)(game)) {
         game.ip2 = req.ip;
-
+        game.timeLastUpdate = new Date().getTime();
         res.json({ msg: "Game updated", game });
       }
     });
@@ -62,6 +62,7 @@ router.put("/:id", (req, res) => {
           // Update game
           game.history.push({ squares: req.body.squares });
           game.moveNum += 1;
+          game.timeLastUpdate = new Date().getTime();
 
           res.json({ msg: "Game updated", game: game });
         }
