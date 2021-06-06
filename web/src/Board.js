@@ -26,7 +26,7 @@ const Square = ({ id, player, square, onClick }) => {
   };
 
   // Changes the opacity of the markers once square is clicked
-  const clickOpacityChanger = () => {
+  const clickTextLightener = () => {
     if (!square) {
       setProperties({
         lighten: false,
@@ -39,7 +39,7 @@ const Square = ({ id, player, square, onClick }) => {
       className={"square a" + id + (properties.lighten ? " lighten" : "")}
       onClick={() => {
         onClick();
-        clickOpacityChanger();
+        clickTextLightener();
       }}
       onMouseLeave={mouseLeave}
       onMouseOver={mouserOver}
