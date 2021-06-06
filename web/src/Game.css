@@ -25,12 +25,12 @@ ul {
   font-size: 50px;
   font-weight: bold;
   line-height: 34px;
-  height: 200px;
+  height: 70px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 200px;
+  width: 70px;
 }
 
 .a0 {
@@ -85,7 +85,7 @@ ul {
   color: #f72b21;
 }
 
-.hover {
+.lighten {
   color: rgba(146, 141, 141, 0.363);
 }
 

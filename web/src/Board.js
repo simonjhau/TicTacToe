@@ -4,46 +4,39 @@ import "./Game.css";
 const numRowCol = 3;
 
 const Square = ({ id, player, square, onClick }) => {
+  // Initialise the hooks
   const [properties, setProperties] = useState({
-    hover: false,
-    fillerText: square,
+    lighten: false,
   });
 
+  // Handler for when mouse hovers the square
   const mouserOver = () => {
     if (!square) {
       setProperties({
-        hover: true,
-        fillerText: player,
-      });
-    } else {
-      setProperties({
-        fillerText: square,
+        lighten: true,
       });
     }
   };
 
+  // Handler for when mouse leaves the square
   const mouseLeave = () => {
-    if (!square) {
-      setProperties({ fillerText: "" });
-    } else {
-      setProperties({
-        hover: false,
-        fillerText: square,
-      });
-    }
+    setProperties({
+      lighten: false,
+    });
   };
 
+  // Changes the opacity of the markers once square is clicked
   const clickOpacityChanger = () => {
     if (!square) {
       setProperties({
-        fillerText: player,
+        lighten: false,
       });
     }
   };
 
   return (
     <button
-      className={"square a" + id + (properties.hover ? " hover" : "")}
+      className={"square a" + id + (properties.lighten ? " lighten" : "")}
       onClick={() => {
         onClick();
         clickOpacityChanger();
@@ -51,7 +44,7 @@ const Square = ({ id, player, square, onClick }) => {
       onMouseLeave={mouseLeave}
       onMouseOver={mouserOver}
     >
-      {properties.fillerText}
+      {properties.lighten ? (square ? square : player) : square}
     </button>
   );
 };
