@@ -33,42 +33,38 @@ ul {
   width: 200px;
 }
 
-.square.a0 {
+.a0 {
   border-left: none;
   border-top: none;
 }
 
-.square.a1 {
+.a1 {
   border-top: none;
 }
 
-.square.a2 {
+.a2 {
   border-right: none;
   border-top: none;
 }
 
-.square.a3 {
+.a3 {
   border-left: none;
 }
 
-.square.a5 {
+.a5 {
   border-right: none;
 }
 
-.square.a6 {
+.a6 {
   border-left: none;
   border-bottom: none;
 }
 
-.square.a7 {
+.a7 {
   border-bottom: none;
 }
 
-.square.a7 {
-  border-bottom: none;
-}
-
-.square.a8 {
+.a8 {
   border-right: none;
   border-bottom: none;
 }
@@ -88,8 +84,9 @@ ul {
 .statusRed {
   color: #f72b21;
 }
-.opacityHalf {
-  opacity: 0.2;
+
+.hover {
+  color: rgba(146, 141, 141, 0.363);
 }
 
 @keyframes winnerAnim {

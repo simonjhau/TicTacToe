@@ -1,101 +1,7 @@
 import React from "react";
 import "./Game.css";
 import undoIcon from "./static/undoIcon.png";
-
-const numRowCol = 3;
-
-class Square extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      className: "square a" + this.props.id,
-    };
-  }
-
-  mouseLeave = () => {
-    this.setState({ className: "square a" + this.props.id });
-  };
-
-  mouseEnter = () => {
-    let addClass;
-    if (this.props.player === "blue") {
-      addClass = " squareBlue";
-    } else {
-      addClass = " squareRed";
-    }
-
-    this.setState({
-      hover: true,
-      className: "square a" + this.props.id + addClass,
-    });
-  };
-
-  toggleBackgroundColor = () => {
-    if (this.props.player === "blue") {
-      this.setState({
-        className: "square a" + this.props.id + " squareRed",
-      });
-    } else {
-      this.setState({
-        className: "square a" + this.props.id + " squareBlue",
-      });
-    }
-  };
-
-  render() {
-    return (
-      <button
-        className={this.state.className}
-        onClick={() => {
-          this.props.onClick();
-          this.toggleBackgroundColor();
-        }} //{this.props.onClick}
-        onMouseEnter={this.mouseEnter}
-        onMouseLeave={this.mouseLeave}
-      >
-        {this.props.value}
-      </button>
-    );
-  }
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        key={i}
-        id={i}
-        player={this.props.player}
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  renderRow = (rowNum) => {
-    let row = [];
-    for (let y = 0; y < numRowCol; y++) {
-      row.push(this.renderSquare(rowNum * 3 + y));
-    }
-    return (
-      <div className="board-row" key={"row" + rowNum}>
-        {row}
-      </div>
-    );
-  };
-
-  renderGrid = () => {
-    let grid = [];
-    for (let x = 0; x < numRowCol; x++) {
-      grid.push(this.renderRow(x));
-    }
-    return <div>{grid}</div>;
-  };
-
-  render() {
-    return <div>{this.renderGrid()}</div>;
-  }
-}
+import BoardExp from "./BoardExp";
 
 class GameExp extends React.Component {
   constructor(props) {
@@ -179,7 +85,7 @@ class GameExp extends React.Component {
       <div className="game-box">
         <div className="game">
           <div className="game-board">
-            <Board
+            <BoardExp
               squares={current.squares}
               player={player}
               onClick={(i) => this.handleClick(i)}

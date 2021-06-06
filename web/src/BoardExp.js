@@ -6,57 +6,59 @@ const numRowCol = 3;
 const Square = ({ id, player, square, onClick }) => {
   const [properties, setProperties] = useState({
     hover: false,
-    fillerText: square,
   });
 
   const mouserOver = () => {
     if (!square) {
       setProperties({
         hover: true,
-        fillerText: player,
-      });
-    } else {
-      setProperties({
-        fillerText: square,
       });
     }
   };
 
   const mouseLeave = () => {
-    if (!square) {
-      setProperties({ fillerText: "" });
-    } else {
-      setProperties({
-        hover: false,
-        fillerText: square,
-      });
-    }
+    setProperties({
+      hover: false,
+    });
   };
 
-  const clickOpacityChanger = () => {
-    if (!square) {
-      setProperties({
-        fillerText: player,
-      });
-    }
-  };
+  // const toggleBackgroundColor = () => {
+  //   if (player === "blue") {
+  //     setProperties({
+  //   hover: true,
+  // });
+  //     });
+  //   } else {
+  //     setProperties({
+  //   hover: true,
+  // });
+  //   }
+  // };
 
   return (
     <button
-      className={"square a" + id + (properties.hover ? " hover" : "")}
+      className={
+        "square a" +
+        id +
+        (properties.hover
+          ? player === "blue"
+            ? " squareBlue"
+            : " squareRed"
+          : "")
+      }
       onClick={() => {
         onClick();
-        clickOpacityChanger();
+        // toggleBackgroundColor();
       }}
+      onMouseEnter={mouserOver}
       onMouseLeave={mouseLeave}
-      onMouseOver={mouserOver}
     >
-      {properties.fillerText}
+      {square}
     </button>
   );
 };
 
-const Board = ({ squares, onClick, player }) => {
+const BoardExp = ({ squares, player, onClick }) => {
   const renderSquare = (i) => {
     return (
       <Square
@@ -92,4 +94,4 @@ const Board = ({ squares, onClick, player }) => {
   return <div>{renderGrid()}</div>;
 };
 
-export default Board;
+export default BoardExp;
