@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import JoinGame from "./JoinGame";
 import Board from "./Board";
 
-const apiUrl = "http://192.168.1.143:5000/api/game";
+const apiUrl = "http://ricktactoe.com:5000/api/game";
 
 const gameStatusType = {
   NOT_STARTED: "not-started",
