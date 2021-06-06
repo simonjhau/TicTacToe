@@ -186,7 +186,7 @@ const OnlineGame = () => {
                     gameData.history[gameData.history.length - 1].squares
                   }
                   onClick={(i) => handleClick(i)}
-                  player={playerSymbol}
+                  player={playerSymbol.current}
                 />
               </div>
             )}

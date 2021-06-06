@@ -33,8 +33,8 @@ const Square = ({ id, player, square, onClick }) => {
         onClick();
         clickTextLightener();
       }}
-      onMouseLeave={mouseLeave}
       onMouseOver={mouserOver}
+      onMouseLeave={mouseLeave}
     >
       {lighten ? (square ? square : player) : square}
     </button>
