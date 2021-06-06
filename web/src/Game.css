@@ -33,46 +33,83 @@ ul {
   width: 70px;
 }
 
-.square.a0 {
+.a0 {
   border-left: none;
   border-top: none;
 }
 
-.square.a1 {
+.a1 {
   border-top: none;
 }
 
-.square.a2 {
+.a2 {
   border-right: none;
   border-top: none;
 }
 
-.square.a3 {
+.a3 {
   border-left: none;
 }
 
-.square.a5 {
+.a5 {
   border-right: none;
 }
 
-.square.a6 {
+.a6 {
   border-left: none;
   border-bottom: none;
 }
 
-.square.a7 {
+.a7 {
   border-bottom: none;
 }
 
-.square.a7 {
-  border-bottom: none;
-}
-
-.square.a8 {
+.a8 {
   border-right: none;
   border-bottom: none;
 }
 
+.squareRed {
+  background-color: #f5ada9;
+}
+
+.squareBlue {
+  background-color: #a9f2f5;
+}
+
+.statusBlue {
+  color: #091fee;
+}
+
+.statusRed {
+  color: #f72b21;
+}
+
+.lighten {
+  color: rgba(146, 141, 141, 0.363);
+}
+
+@keyframes winnerAnim {
+  from {
+    color: red;
+    font-size: 30px;
+  }
+  to {
+    color: yellow;
+    font-size: 20px;
+  }
+  to {
+    color: blue;
+    font-size: 15px;
+  }
+}
+
+/* The element to apply the animation to */
+.statusWinner {
+  color: #56f318;
+  animation-name: winnerAnim;
+  animation-duration: 2s;
+}
 .kbd-navigation .square:focus {
   background: #ddd;
 }

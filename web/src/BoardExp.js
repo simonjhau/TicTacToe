@@ -4,44 +4,47 @@ import "./Game.css";
 const numRowCol = 3;
 
 const Square = ({ id, player, square, onClick }) => {
-  // Initialise the hooks
-  const [lighten, setLighten] = useState(false);
+  const [properties, setProperties] = useState({
+    hover: false,
+  });
 
-  // Handler for when mouse hovers the square
   const mouserOver = () => {
     if (!square) {
-      setLighten(true);
+      setProperties({
+        hover: true,
+      });
     }
   };
 
-  // Handler for when mouse leaves the square
   const mouseLeave = () => {
-    setLighten(false);
-  };
-
-  // Changes the opacity of the markers once square is clicked
-  const clickTextLightener = () => {
-    if (!square) {
-      setLighten(false);
-    }
+    setProperties({
+      hover: false,
+    });
   };
 
   return (
     <button
-      className={"square a" + id + (lighten ? " lighten" : "")}
+      className={
+        "square a" +
+        id +
+        (properties.hover
+          ? player === "blue"
+            ? " squareBlue"
+            : " squareRed"
+          : "")
+      }
       onClick={() => {
         onClick();
-        clickTextLightener();
       }}
+      onMouseEnter={mouserOver}
       onMouseLeave={mouseLeave}
-      onMouseOver={mouserOver}
     >
-      {lighten ? (square ? square : player) : square}
+      {square}
     </button>
   );
 };
 
-const Board = ({ squares, onClick, player }) => {
+const BoardExp = ({ squares, player, onClick }) => {
   const renderSquare = (i) => {
     return (
       <Square
@@ -77,4 +80,4 @@ const Board = ({ squares, onClick, player }) => {
   return <div>{renderGrid()}</div>;
 };
 
-export default Board;
+export default BoardExp;
