@@ -5,38 +5,30 @@ const numRowCol = 3;
 
 const Square = ({ id, player, square, onClick }) => {
   // Initialise the hooks
-  const [properties, setProperties] = useState({
-    lighten: false,
-  });
+  const [lighten, setLighten] = useState(false);
 
   // Handler for when mouse hovers the square
   const mouserOver = () => {
     if (!square) {
-      setProperties({
-        lighten: true,
-      });
+      setLighten(true);
     }
   };
 
   // Handler for when mouse leaves the square
   const mouseLeave = () => {
-    setProperties({
-      lighten: false,
-    });
+    setLighten(false);
   };
 
   // Changes the opacity of the markers once square is clicked
   const clickTextLightener = () => {
     if (!square) {
-      setProperties({
-        lighten: false,
-      });
+      setLighten(false);
     }
   };
 
   return (
     <button
-      className={"square a" + id + (properties.lighten ? " lighten" : "")}
+      className={"square a" + id + (lighten ? " lighten" : "")}
       onClick={() => {
         onClick();
         clickTextLightener();
@@ -44,7 +36,7 @@ const Square = ({ id, player, square, onClick }) => {
       onMouseLeave={mouseLeave}
       onMouseOver={mouserOver}
     >
-      {properties.lighten ? (square ? square : player) : square}
+      {lighten ? (square ? square : player) : square}
     </button>
   );
 };
