@@ -95,6 +95,9 @@ const OnlineGame = () => {
         console.log("wonnn", gameWinner);
         setGameInfo(`${gameWinner} has won!`);
         return () => clearInterval(interval);
+      } else if (gameData.moveNum >= 9) {
+        setGameInfo("It's a draw!");
+        return () => clearInterval(interval);
       }
 
       // Check if it is currently this player's turn
