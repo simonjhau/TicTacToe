@@ -7,38 +7,45 @@ const numRowCol = 3;
 class Square extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hover: false, backgroundColor: "white" };
+    this.state = {
+      className: "square a" + this.props.id,
+    };
   }
 
   mouseLeave = () => {
-    this.setState({ hover: false });
-    this.setState({ backgroundColor: "#fff" });
+    this.setState({ className: "square a" + this.props.id });
   };
 
   mouseEnter = () => {
-    let colour;
+    let addClass;
     if (this.props.player === "blue") {
-      colour = "#a9f2f5";
+      addClass = " squareBlue";
     } else {
-      colour = "#f5ada9";
+      addClass = " squareRed";
     }
 
-    this.setState({ hover: true, backgroundColor: colour });
+    this.setState({
+      hover: true,
+      className: "square a" + this.props.id + addClass,
+    });
   };
 
   toggleBackgroundColor = () => {
     if (this.props.player === "blue") {
-      this.setState({ backgroundColor: "#f5ada9" });
+      this.setState({
+        className: "square a" + this.props.id + " squareRed",
+      });
     } else {
-      this.setState({ backgroundColor: "#a9f2f5" });
+      this.setState({
+        className: "square a" + this.props.id + " squareBlue",
+      });
     }
   };
 
   render() {
     return (
       <button
-        style={{ backgroundColor: this.state.backgroundColor }}
-        className={"square a" + this.props.id}
+        className={this.state.className}
         onClick={() => {
           this.props.onClick();
           this.toggleBackgroundColor();
@@ -157,6 +164,17 @@ class GameExp extends React.Component {
       }
     }
 
+    let statusStyle;
+    if (winner) {
+      statusStyle = "statusWinner";
+    } else {
+      if (player === "blue") {
+        statusStyle = "statusBlue";
+      } else {
+        statusStyle = "statusRed";
+      }
+    }
+
     return (
       <div className="game-box">
         <div className="game">
@@ -168,7 +186,7 @@ class GameExp extends React.Component {
             />
           </div>
           <div className="game-info">
-            <div style={{ color: player }}>{status}</div>
+            <div className={statusStyle}>{status}</div>
             <img
               style={{ width: "30px" }}
               src={undoIcon}

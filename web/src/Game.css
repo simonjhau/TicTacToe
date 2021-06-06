@@ -25,12 +25,12 @@ ul {
   font-size: 50px;
   font-weight: bold;
   line-height: 34px;
-  height: 70px;
+  height: 200px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 70px;
+  width: 200px;
 }
 
 .square.a0 {
@@ -73,6 +73,46 @@ ul {
   border-bottom: none;
 }
 
+.squareRed {
+  background-color: #f5ada9;
+}
+
+.squareBlue {
+  background-color: #a9f2f5;
+}
+
+.statusBlue {
+  color: #091fee;
+}
+
+.statusRed {
+  color: #f72b21;
+}
+.opacityHalf {
+  opacity: 0.2;
+}
+
+@keyframes winnerAnim {
+  from {
+    color: red;
+    font-size: 30px;
+  }
+  to {
+    color: yellow;
+    font-size: 20px;
+  }
+  to {
+    color: blue;
+    font-size: 15px;
+  }
+}
+
+/* The element to apply the animation to */
+.statusWinner {
+  color: #56f318;
+  animation-name: winnerAnim;
+  animation-duration: 2s;
+}
 .kbd-navigation .square:focus {
   background: #ddd;
 }

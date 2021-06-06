@@ -34,8 +34,6 @@ class LocalGame extends React.Component {
       xIsNext: !this.state.xIsNext,
       moveHistory: moveHistory.concat(i),
     });
-
-    console.log(this.state.history);
   }
 
   jumpTo(step) {
@@ -95,11 +93,13 @@ class LocalGame extends React.Component {
     }
 
     let status;
+    let player;
     if (winner) {
       status = "Winner: " + winner;
     } else {
       if (this.state.stepNumber < 9) {
         status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+        player = this.state.xIsNext ? "X" : "O";
       } else {
         status = "It's a draw";
       }
@@ -112,6 +112,7 @@ class LocalGame extends React.Component {
             <Board
               squares={current.squares}
               onClick={(i) => this.handleClick(i)}
+              player={player}
             />
           </div>
           <div className="game-info">

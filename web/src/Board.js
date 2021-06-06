@@ -1,17 +1,80 @@
+import React from "react";
 import "./Game.css";
+
 const numRowCol = 3;
 
-const Square = ({ onClick, value }) => {
-  return (
-    <button className="square" onClick={onClick}>
-      {value}
-    </button>
-  );
-};
+class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      className: "square a" + this.props.id,
+      fillerText: this.props.value,
+    };
+  }
 
-const Board = ({ squares, onClick }) => {
+  mouseLeave = () => {
+    if (!this.props.value) {
+      this.setState({ className: "square a" + this.props.id, fillerText: "" });
+    } else {
+      this.setState({
+        className: "square a" + this.props.id,
+        fillerText: this.props.value,
+      });
+    }
+    this.setState({ className: "square a" + this.props.id });
+  };
+
+  mouseEnter = () => {
+    if (!this.props.value) {
+      this.setState({
+        className: "square a" + this.props.id + " opacityHalf",
+        fillerText: this.props.player,
+      });
+    } else {
+      this.setState({
+        className: "square a" + this.props.id,
+        fillerText: this.props.value,
+      });
+    }
+  };
+
+  clickOpacityChanger = () => {
+    if (!this.props.value) {
+      this.setState({
+        className: "square a" + this.props.id,
+        fillerText: this.props.player,
+      });
+    }
+  };
+
+  render() {
+    return (
+      <button
+        className={this.state.className}
+        onClick={() => {
+          this.props.onClick();
+          this.clickOpacityChanger();
+        }} //{this.props.onClick}
+        onMouseEnter={this.mouseEnter}
+        onMouseLeave={this.mouseLeave}
+      >
+        {this.state.fillerText}
+      </button>
+    );
+  }
+}
+
+const Board = ({ squares, onClick, player }) => {
   const renderSquare = (i) => {
-    return <Square key={i} value={squares[i]} onClick={() => onClick(i)} />;
+    return (
+      <Square
+        key={i}
+        id={i}
+        player={player}
+        value={squares[i]}
+        onClick={() => onClick(i)}
+      />
+    );
   };
 
   const renderRow = (rowNum) => {

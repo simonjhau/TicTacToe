@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import JoinGame from "./JoinGame";
 import Board from "./Board";
 
-const apiUrl = "http://192.168.0.11:5000/api/game";
+const apiUrl = "http://192.168.1.143:5000/api/game";
 
 const gameStatusType = {
   NOT_STARTED: "not-started",
@@ -186,6 +186,7 @@ const OnlineGame = () => {
                     gameData.history[gameData.history.length - 1].squares
                   }
                   onClick={(i) => handleClick(i)}
+                  player={playerSymbol}
                 />
               </div>
             )}
