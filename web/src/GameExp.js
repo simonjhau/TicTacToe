@@ -59,12 +59,12 @@ class GameExp extends React.Component {
 
     let status;
     let player;
+    player = this.state.bIsNext ? "blue" : "red";
     if (winner) {
       status = this.state.bIsNext ? "Red wins!" : "Blue wins!";
     } else {
       if (this.state.stepNumber < 9) {
-        status = "Next player: " + (this.state.bIsNext ? "Blue" : "Red");
-        player = this.state.bIsNext ? "blue" : "red";
+        status = "Next player: " + player;
       } else {
         status = "It's a draw";
       }

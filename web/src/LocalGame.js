@@ -94,12 +94,12 @@ class LocalGame extends React.Component {
 
     let status;
     let player;
+    player = this.state.xIsNext ? "X" : "O";
     if (winner) {
       status = "Winner: " + winner;
     } else {
       if (this.state.stepNumber < 9) {
-        status = "Next player: " + (this.state.xIsNext ? "X" : "O");
-        player = this.state.xIsNext ? "X" : "O";
+        status = "Next player: " + player;
       } else {
         status = "It's a draw";
       }

@@ -22,19 +22,6 @@ const Square = ({ id, player, square, onClick }) => {
     });
   };
 
-  // const toggleBackgroundColor = () => {
-  //   if (player === "blue") {
-  //     setProperties({
-  //   hover: true,
-  // });
-  //     });
-  //   } else {
-  //     setProperties({
-  //   hover: true,
-  // });
-  //   }
-  // };
-
   return (
     <button
       className={
@@ -48,7 +35,6 @@ const Square = ({ id, player, square, onClick }) => {
       }
       onClick={() => {
         onClick();
-        // toggleBackgroundColor();
       }}
       onMouseEnter={mouserOver}
       onMouseLeave={mouseLeave}
