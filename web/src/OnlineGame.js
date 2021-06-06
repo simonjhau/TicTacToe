@@ -41,7 +41,7 @@ const OnlineGame = () => {
         setGameData(data.game);
         playerSymbol.current = "X";
         setPlayerTurn(true);
-        setGameInfo("Waiting for opponent to join");
+        setGameInfo("Send code to opponent so they can join!");
       })
       .catch((error) => {
         setGameInfo("Unable to create new game... Please try again later");
