@@ -1,0 +1,91 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol,
+ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #fff;
+  border: 2px solid #f1356d63;
+  float: left;
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 70px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 70px;
+}
+
+.square.a0, .square.a1, .square.a2,.square.a3, .square.a4, .square.a20, .square.a21, .square.a22,.square.a23, .square.a24, .square.a5, .square.a10, .square.a15,.square.a9, .square.a14, .square.a19{
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+
+.square.a6 {
+  border-left: none;
+  border-top: none;
+}
+
+.square.a7 {
+  border-top: none;
+}
+
+.square.a8 {
+  border-right: none;
+  border-top: none;
+}
+
+.square.a11 {
+  border-left: none;
+}
+
+.square.a13 {
+  border-right: none;
+}
+
+.square.a16 {
+  border-left: none;
+  border-bottom: none;
+}
+
+.square.a17 {
+  border-bottom: none;
+}
+
+.square.a18 {
+  border-right: none;
+  border-bottom: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.game-info {
+  margin-left: 50px;
+}

@@ -12,6 +12,9 @@ const Home = () => {
       <Link to="experiment">
         <button>Experiment</button>
       </Link>
+      <Link to="exp2">
+        <button>Exp2</button>
+      </Link>
     </div>
   );
 };
