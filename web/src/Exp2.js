@@ -4,7 +4,7 @@ import undoIcon from "./static/undoIcon.png";
 import trollFace from "./static/trollFace.png";
 
 const numRowCol = 5;
-const hiddensquares = [0,1,2,3,4,5,9,10,14,15,19,20,21,22,23,24];
+const hiddensquares = [0, 1, 2, 3, 4, 5, 9, 10, 14, 15, 19, 20, 21, 22, 23, 24];
 
 class Square extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Square extends React.Component {
 
   mouseEnter = () => {
     let colour;
-    if (!hiddensquares.includes(this.props.id)){
+    if (!hiddensquares.includes(this.props.id)) {
       if (this.props.player === "blue") {
         colour = "#a9f2f5";
       } else {
@@ -31,7 +31,7 @@ class Square extends React.Component {
   };
 
   toggleBackgroundColor = () => {
-    if(!hiddensquares.includes(this.props.id)){
+    if (!hiddensquares.includes(this.props.id)) {
       if (this.props.player === "blue") {
         this.setState({ backgroundColor: "#f5ada9" });
       } else {
@@ -46,7 +46,7 @@ class Square extends React.Component {
         style={{ backgroundColor: this.state.backgroundColor }}
         className={"square a" + this.props.id}
         onClick={() => {
-          if(canGo(this.props.id,this.props.stepNumber,this.props.squares)){
+          if (canGo(this.props.id, this.props.stepNumber, this.props.squares)) {
             this.props.onClick();
             this.toggleBackgroundColor();
           }
@@ -61,7 +61,6 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
-
   renderSquare(i) {
     return (
       <Square
@@ -162,7 +161,7 @@ class Exp2 extends React.Component {
     let myimg;
     let mywidth;
     let myalt;
-  
+
     if (winner) {
       status = this.state.bIsNext ? "O wins!" : "X wins!";
     } else {
@@ -173,7 +172,7 @@ class Exp2 extends React.Component {
         status = "It's a draw";
       }
     }
-    if(isTrollWin){
+    if (isTrollWin) {
       myimg = trollFace;
       mywidth = "300px";
       myalt = "Problem?";
@@ -194,7 +193,7 @@ class Exp2 extends React.Component {
               squares={current.squares}
               player={player}
               onClick={(i) => this.handleClick(i)}
-              stepNumber = {this.state.stepNumber}
+              stepNumber={this.state.stepNumber}
             />
           </div>
           <div className="game-info">
@@ -228,33 +227,32 @@ function calculateWinner(squares) {
 
     [0, 6, 12],
     [4, 8, 12],
-    [20,16,12],
-    [24,18,12],
+    [20, 16, 12],
+    [24, 18, 12],
 
-    [1,6,11],
-    [1,7,13],
-    [2,7,12],
-    [3,8,13],
-    [3,7,11],
+    [1, 6, 11],
+    [1, 7, 13],
+    [2, 7, 12],
+    [3, 8, 13],
+    [3, 7, 11],
 
-    [21,16,11],
-    [21,17,13],
-    [22,17,12],
-    [23,18,13],
-    [23,17,11],
+    [21, 16, 11],
+    [21, 17, 13],
+    [22, 17, 12],
+    [23, 18, 13],
+    [23, 17, 11],
 
-    [5,6,7],
-    [5,11,17],
-    [10,11,12],
-    [15,16,17],
-    [15,11,7],
+    [5, 6, 7],
+    [5, 11, 17],
+    [10, 11, 12],
+    [15, 16, 17],
+    [15, 11, 7],
 
-    [9,8,7],
-    [9,13,17],
-    [14,13,12],
-    [19,18,17],
-    [19,13,7]
-
+    [9, 8, 7],
+    [9, 13, 17],
+    [14, 13, 12],
+    [19, 18, 17],
+    [19, 13, 7],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
@@ -265,36 +263,36 @@ function calculateWinner(squares) {
   return null;
 }
 
-function isTrollWinner(squares){
-  const lines=[
+function isTrollWinner(squares) {
+  const lines = [
     [0, 6, 12],
     [4, 8, 12],
-    [20,16,12],
-    [24,18,12],
+    [20, 16, 12],
+    [24, 18, 12],
 
-    [1,6,11],
-    [1,7,13],
-    [2,7,12],
-    [3,8,13],
-    [3,7,11],
+    [1, 6, 11],
+    [1, 7, 13],
+    [2, 7, 12],
+    [3, 8, 13],
+    [3, 7, 11],
 
-    [21,16,11],
-    [21,17,13],
-    [22,17,12],
-    [23,18,13],
-    [23,17,11],
+    [21, 16, 11],
+    [21, 17, 13],
+    [22, 17, 12],
+    [23, 18, 13],
+    [23, 17, 11],
 
-    [5,6,7],
-    [5,11,17],
-    [10,11,12],
-    [15,16,17],
-    [15,11,7],
+    [5, 6, 7],
+    [5, 11, 17],
+    [10, 11, 12],
+    [15, 16, 17],
+    [15, 11, 7],
 
-    [9,8,7],
-    [9,13,17],
-    [14,13,12],
-    [19,18,17],
-    [19,13,7]
+    [9, 8, 7],
+    [9, 13, 17],
+    [14, 13, 12],
+    [19, 18, 17],
+    [19, 13, 7],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
@@ -305,115 +303,138 @@ function isTrollWinner(squares){
   return false;
 }
 
-function canGo(square, turn,squares){
-
+function canGo(square, turn, squares) {
   let turnplayer;
 
-  if (turn%2 ===1){
+  if (turn % 2 === 1) {
     turnplayer = "O";
   } else {
     turnplayer = "X";
   }
 
-  if (!hiddensquares.includes(square)){
+  if (!hiddensquares.includes(square)) {
     return true;
   } else {
-    if(hiddensquares.includes(square) && turn > 7){
-      switch (square){
+    if (hiddensquares.includes(square) && turn > 7) {
+      switch (square) {
         case 0:
-          if (squares[6] === squares[12] && squares[12] === turnplayer){
+          if (squares[6] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 4:
-          if (squares[8] === squares[12] && squares[12] === turnplayer){
+          if (squares[8] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 20:
-          if (squares[16] === squares[12] && squares[12] === turnplayer){
+          if (squares[16] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 24:
-          if (squares[18] === squares[12] && squares[12] === turnplayer){
+          if (squares[18] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 2:
-          if (squares[7] === squares[12] && squares[12] === turnplayer){
+          if (squares[7] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 22:
-          if (squares[17] === squares[12] && squares[12] === turnplayer){
+          if (squares[17] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 10:
-          if (squares[11] === squares[12] && squares[12] === turnplayer){
+          if (squares[11] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
         case 14:
-          if (squares[13] === squares[12] && squares[12] === turnplayer){
+          if (squares[13] === squares[12] && squares[12] === turnplayer) {
             return true;
           } else {
             return false;
           }
 
         case 1:
-          if ((squares[6] === squares[11] && squares[11] === turnplayer)||(squares[7] === squares[13] && squares[13] === turnplayer)){
+          if (
+            (squares[6] === squares[11] && squares[11] === turnplayer) ||
+            (squares[7] === squares[13] && squares[13] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
         case 3:
-          if ((squares[8] === squares[13] && squares[13] === turnplayer)||(squares[7] === squares[11] && squares[11] === turnplayer)){
+          if (
+            (squares[8] === squares[13] && squares[13] === turnplayer) ||
+            (squares[7] === squares[11] && squares[11] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
         case 21:
-          if ((squares[16] === squares[11] && squares[11] === turnplayer)||(squares[17] === squares[13] && squares[13] === turnplayer)){
+          if (
+            (squares[16] === squares[11] && squares[11] === turnplayer) ||
+            (squares[17] === squares[13] && squares[13] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
         case 23:
-          if ((squares[18] === squares[13] && squares[13] === turnplayer)||(squares[17] === squares[11] && squares[11] === turnplayer)){
+          if (
+            (squares[18] === squares[13] && squares[13] === turnplayer) ||
+            (squares[17] === squares[11] && squares[11] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
 
         case 5:
-          if ((squares[6] === squares[7] && squares[7] === turnplayer)||(squares[11] === squares[17] && squares[11] === turnplayer)){
+          if (
+            (squares[6] === squares[7] && squares[7] === turnplayer) ||
+            (squares[11] === squares[17] && squares[11] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
         case 15:
-          if ((squares[16] === squares[17] && squares[17] === turnplayer)||(squares[11] === squares[7] && squares[11] === turnplayer)){
+          if (
+            (squares[16] === squares[17] && squares[17] === turnplayer) ||
+            (squares[11] === squares[7] && squares[11] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
         case 9:
-          if ((squares[8] === squares[7] && squares[7] === turnplayer)||(squares[13] === squares[17] && squares[17] === turnplayer)){
+          if (
+            (squares[8] === squares[7] && squares[7] === turnplayer) ||
+            (squares[13] === squares[17] && squares[17] === turnplayer)
+          ) {
             return true;
           } else {
             return false;
           }
         case 19:
-          if ((squares[18] === squares[17] && squares[17] === turnplayer)||(squares[7] === squares[13] && squares[13] === turnplayer)){
+          if (
+            (squares[18] === squares[17] && squares[17] === turnplayer) ||
+            (squares[7] === squares[13] && squares[13] === turnplayer)
+          ) {
             return true;
           } else {
             return false;

@@ -33,7 +33,22 @@ ul {
   width: 70px;
 }
 
-.square.a0, .square.a1, .square.a2,.square.a3, .square.a4, .square.a20, .square.a21, .square.a22,.square.a23, .square.a24, .square.a5, .square.a10, .square.a15,.square.a9, .square.a14, .square.a19{
+.square.a0,
+.square.a1,
+.square.a2,
+.square.a3,
+.square.a4,
+.square.a20,
+.square.a21,
+.square.a22,
+.square.a23,
+.square.a24,
+.square.a5,
+.square.a10,
+.square.a15,
+.square.a9,
+.square.a14,
+.square.a19 {
   border-top: none;
   border-bottom: none;
   border-left: none;

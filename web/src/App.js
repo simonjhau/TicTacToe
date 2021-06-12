@@ -3,7 +3,7 @@ import Home from "./Home";
 import OnlineGame from "./OnlineGame";
 
 import GameExp from "./GameExp";
-import Exp2 from "./Exp2"
+import Exp2 from "./Exp2";
 
 import LocalGame from "./LocalGame";
 
