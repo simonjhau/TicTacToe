@@ -13,7 +13,7 @@ const Home = () => {
         <button>Experiment</button>
       </Link>
       <Link to="exp2">
-        <button>Exp2</button>
+        <button>TicTacTroll</button>
       </Link>
     </div>
   );

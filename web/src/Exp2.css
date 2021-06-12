@@ -33,60 +33,60 @@ ul {
   width: 70px;
 }
 
-.square.a0,
-.square.a1,
-.square.a2,
-.square.a3,
-.square.a4,
-.square.a20,
-.square.a21,
-.square.a22,
-.square.a23,
-.square.a24,
-.square.a5,
-.square.a10,
-.square.a15,
-.square.a9,
-.square.a14,
-.square.a19 {
+.square.expa0,
+.square.expa1,
+.square.expa2,
+.square.expa3,
+.square.expa4,
+.square.expa20,
+.square.expa21,
+.square.expa22,
+.square.expa23,
+.square.expa24,
+.square.expa5,
+.square.expa10,
+.square.expa15,
+.square.expa9,
+.square.expa14,
+.square.expa19 {
   border-top: none;
   border-bottom: none;
   border-left: none;
   border-right: none;
 }
 
-.square.a6 {
+.square.expa6 {
   border-left: none;
   border-top: none;
 }
 
-.square.a7 {
+.square.expa7 {
   border-top: none;
 }
 
-.square.a8 {
+.square.expa8 {
   border-right: none;
   border-top: none;
 }
 
-.square.a11 {
+.square.expa11 {
   border-left: none;
 }
 
-.square.a13 {
+.square.expa13 {
   border-right: none;
 }
 
-.square.a16 {
+.square.expa16 {
   border-left: none;
   border-bottom: none;
 }
 
-.square.a17 {
+.square.expa17 {
   border-bottom: none;
 }
 
-.square.a18 {
+.square.expa18 {
   border-right: none;
   border-bottom: none;
 }

@@ -44,7 +44,7 @@ class Square extends React.Component {
     return (
       <button
         style={{ backgroundColor: this.state.backgroundColor }}
-        className={"square a" + this.props.id}
+        className={"square expa" + this.props.id}
         onClick={() => {
           if (canGo(this.props.id, this.props.stepNumber, this.props.squares)) {
             this.props.onClick();
