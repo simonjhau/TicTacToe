@@ -17,7 +17,7 @@ class Square extends React.Component {
     this.setState({ backgroundColor: "#fff" });
   };
 
-  mouseEnter = () => {
+  mouseOver = () => {
     let colour;
     if (!hiddensquares.includes(this.props.id)) {
       if (this.props.player === "blue") {
@@ -51,7 +51,7 @@ class Square extends React.Component {
             this.toggleBackgroundColor();
           }
         }} //{this.props.onClick}
-        onMouseEnter={this.mouseEnter}
+        onMouseOver={this.mouseOver}
         onMouseLeave={this.mouseLeave}
       >
         {this.props.value}
