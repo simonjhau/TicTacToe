@@ -3,6 +3,7 @@ import Home from "./Home";
 import OnlineGame from "./OnlineGame";
 
 import GameExp from "./GameExp";
+import TicTacTroll from "./TicTacTroll";
 
 import LocalGame from "./LocalGame";
 
@@ -27,6 +28,9 @@ function App() {
             </Route>
             <Route path="/experiment">
               <GameExp />
+            </Route>
+            <Route path="/tictactroll">
+              <TicTacTroll />
             </Route>
             <Route path="*">
               <NotFound></NotFound>
