@@ -1,5 +1,5 @@
 import React from "react";
-import "./Exp2.css";
+import "./TicTacTroll.css";
 import undoIcon from "./static/undoIcon.png";
 import trollFace from "./static/trollFace.png";
 
@@ -44,7 +44,7 @@ class Square extends React.Component {
     return (
       <button
         style={{ backgroundColor: this.state.backgroundColor }}
-        className={"square expa" + this.props.id}
+        className={"expsquare expa" + this.props.id}
         onClick={() => {
           if (canGo(this.props.id, this.props.stepNumber, this.props.squares)) {
             this.props.onClick();

@@ -12,7 +12,7 @@ const Home = () => {
       <Link to="experiment">
         <button>Experiment</button>
       </Link>
-      <Link to="exp2">
+      <Link to="tictactroll">
         <button>TicTacTroll</button>
       </Link>
     </div>
