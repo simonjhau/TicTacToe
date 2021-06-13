@@ -1,0 +1,106 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol,
+ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.expsquare {
+  background: #fff;
+  border: 2px solid #f1356d63;
+  float: left;
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 70px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 70px;
+}
+
+.expa0,
+.expa1,
+.expa2,
+.expa3,
+.expa4,
+.expa20,
+.expa21,
+.expa22,
+.expa23,
+.expa24,
+.expa5,
+.expa10,
+.expa15,
+.expa9,
+.expa14,
+.expa19 {
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+
+.expa6 {
+  border-left: none;
+  border-top: none;
+}
+
+.expa7 {
+  border-top: none;
+}
+
+.expa8 {
+  border-right: none;
+  border-top: none;
+}
+
+.expa11 {
+  border-left: none;
+}
+
+.expa13 {
+  border-right: none;
+}
+
+.expa16 {
+  border-left: none;
+  border-bottom: none;
+}
+
+.expa17 {
+  border-bottom: none;
+}
+
+.expa18 {
+  border-right: none;
+  border-bottom: none;
+}
+
+.kbd-navigation .expsquare:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.game-info {
+  margin-left: 50px;
+}
